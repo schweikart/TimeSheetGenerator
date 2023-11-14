@@ -1,6 +1,7 @@
 /* Licensed under MIT 2023. */
 package io;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,11 @@ public class LatexGenerator implements IGenerator {
 	}
 
 	private final static String TABLE_DATE_FORMAT = "dd.MM.yy";
+
+	/**
+	 * Using this format ensures two trailing zeros.
+	 */
+	private final static DecimalFormat MONEY_FORMAT = new DecimalFormat("#0.00");
 
 	private final TimeSheet timeSheet;
 	private final String template;
@@ -134,7 +140,7 @@ public class LatexGenerator implements IGenerator {
 			value = timeSheet.getProfession().getMaxWorkingTime().toString();
 			break;
 		case WAGE:
-			value = Double.toString(timeSheet.getProfession().getWage());
+			value = MONEY_FORMAT.format(timeSheet.getProfession().getWage());
 			break;
 		case VACATION:
 			value = timeSheet.getTotalVacationTime().toString();
